@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { getGuid, getUserId } from "../Common/Utils";
 import { NewTodoItem } from "../Models/new-todo-item";
 import { TodoItem } from "../Models/todo-item";
 import { TodoItemRecord } from "../Models/todo-item-record";
@@ -10,13 +11,13 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     if(newItem && newItem.title && newItem.description){
         const todoItem = {
-            id: 'dummy-id',
+            id: getGuid(),
             title: newItem.title,
             description: newItem.description
         } as TodoItem;
 
         const todoItemRecord = {
-            userId: 'dummy-userId',
+            userId: getUserId(),
             ...todoItem
         } as TodoItemRecord;
 

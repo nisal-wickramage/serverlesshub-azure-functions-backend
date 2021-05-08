@@ -14,6 +14,16 @@
       "type": "http",
       "direction": "out",
       "name": "res"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "todoItemRecord",
+      "databaseName": "todocontainer",
+      "collectionName": "todoItems",
+      "createIfNotExists": "false",
+      "connectionStringSetting": "shdevdb_DOCUMENTDB",
+      "partitionKey": "/userId"
     }
   ],
   "scriptFile": "../dist/CreateTodoItem/index.js"

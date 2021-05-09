@@ -28,7 +28,7 @@ export function setUserId(userId: string, blob: any): Buffer{
     return Buffer.from(csvString,'ascii');
 }
 
-function getUserIdFromUpload(blob: any) {
+export function getUserIdFromUpload(blob: any) {
     const csvBuffer = Buffer.from(blob);
 
     const csvString = csvBuffer.toString('ascii');

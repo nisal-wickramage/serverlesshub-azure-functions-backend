@@ -44,3 +44,9 @@ export async function editTodoItem(id: string, userId: string, todoItem: TodoIte
                                         .replace(todoItem);
     return updatedItem;
 }
+
+export async function createTodoItem(todoItem: TodoItemRecord) {
+    const container = getCosmosDbContainer();
+    const { resource: createdItem } = await container.items.create(todoItem);
+    return createdItem;
+}

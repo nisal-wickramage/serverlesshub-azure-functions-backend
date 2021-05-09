@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "uploads/{name}",
+      "connection": "shdevapiuploadstorage_STORAGE"
+    }
+  ],
+  "scriptFile": "../dist/ProcessUploads/index.js"
+}

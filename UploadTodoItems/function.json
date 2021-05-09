@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post"
+      ],
+      "route": "uploadtodoitems/"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "blob",
+      "direction": "out",
+      "name": "upload",
+      "path": "uploads/{rand-guid}.csv",
+      "connection": "shdevapiuploadstorage_STORAGE"
+    }
+  ],
+  "scriptFile": "../dist/UploadTodoItems/index.js"
+}

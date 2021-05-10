@@ -8,7 +8,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     context.log.info('Edit todo item started.');
     
     const id = context.bindingData.id;
-    const userId = getUserId();
+    const userId = getUserId(req.headers);
 
     const todoItem = req.body as TodoItem;
 

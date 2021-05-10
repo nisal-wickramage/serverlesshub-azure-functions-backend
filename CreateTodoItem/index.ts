@@ -17,7 +17,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         } as TodoItem;
 
         const todoItemRecord = {
-            userId: getUserId(),
+            userId: getUserId(req.headers),
             ...todoItem
         } as TodoItemRecord;
 

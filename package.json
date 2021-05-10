@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@azure/cosmos": "^3.11.1",
+    "jwt-decode": "^3.1.2",
     "parse-multipart": "^1.0.4",
     "uuid": "^8.3.2"
   },

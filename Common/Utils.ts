@@ -1,9 +1,19 @@
 import { v4 as uuid } from "uuid";
 import { TodoItemRecord } from "../Models/todo-item-record";
 import * as parseMultipart from "parse-multipart";
+import { HttpRequestHeaders } from "@azure/functions";
+import jwt_decode from "jwt-decode";
 
-export function getUserId(): string {
-    return 'dummy-userId';
+export function getUserId(headers: HttpRequestHeaders): string {
+    const token = headers["authorization"].replace("Bearer ", "");
+    const claims = jwt_decode(token);
+
+    const scope = claims["scp"];
+    if(scope && scope === "todo.owner") {
+        return claims["sub"];
+    }
+
+    throw new Error("Unauthorized user.");
 }
 
 export function getGuid(): string {

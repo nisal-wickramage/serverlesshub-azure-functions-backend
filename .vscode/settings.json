@@ -1,5 +1,5 @@
 {
-  "azureFunctions.deploySubpath": ".",
+  "azureFunctions.deploySubpath": "src",
   "azureFunctions.postDeployTask": "npm install",
   "azureFunctions.projectLanguage": "TypeScript",
   "azureFunctions.projectRuntime": "~3",

@@ -4,6 +4,8 @@ import { TodoItemRecord } from '../src/Models/todo-item-record';
 import { CosmosClient } from "@azure/cosmos"
 import { mocked } from 'ts-jest/utils';
 
+jest.mock("../src/Common/Utils");
+
 let todoItems = [{
     id: 'mock-id',
     userId: 'mock-user-id',

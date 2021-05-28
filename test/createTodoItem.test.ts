@@ -2,6 +2,8 @@ import httpTrigger from '../src/CreateTodoItem';
 import { NewTodoItem } from '../src/Models/new-todo-item';
 import { TestContext } from './Mocks/testContext';
 
+jest.mock("../src/Common/Utils");
+
 it('should set todo item record output binding when validation pass', async () => {
     const todoItem = {
         title: 'mock-title',

@@ -5,7 +5,6 @@ import { CosmosClient } from "@azure/cosmos"
 import { mocked } from 'ts-jest/utils';
 import * as util from "../src/Common/Utils";
 
-jest.spyOn(util, 'getUserId').mockReturnValue('mock-user-id');
 
 let todoItems = [{
     id: 'mock-id',
@@ -23,11 +22,15 @@ jest.mock("@azure/cosmos", () => {
                         container: function(container: string) {
                             return {
                                 items: {
-                                    query: function(query: string) {
+                                    query: function(querySpec: { query: string }) {
+                                        let records = [];
+                                        if(querySpec.query.includes('mock-user-id')) {
+                                            records = todoItems;
+                                        }
+
                                         return {
                                             fetchAll: function() {
-                                                
-                                                return { resources: todoItems };
+                                                return { resources: records };
                                             }
                                         }
                                     }
@@ -48,18 +51,19 @@ beforeEach(() => {
 })
 
 it('should return 200 when todo items exists', async () => {
+    jest.spyOn(util, 'getUserId').mockReturnValue('mock-user-id');
     const context = new TestContext();
     const request = {};
-//processUploads.test.ts
+    
     await httpTrigger(context, request);
     expect(context.res.status).toBe(200);
     expect(MockedCosmosClient).toHaveBeenCalledTimes(1);
 })
 
 it('should return 204 when todo items does not exists', async () => {
+    jest.spyOn(util, 'getUserId').mockReturnValue('mock-user2-id');
     const context = new TestContext();
     const request = {};
-    todoItems = [];
 
     await httpTrigger(context, request);
     expect(context.res.status).toBe(204);

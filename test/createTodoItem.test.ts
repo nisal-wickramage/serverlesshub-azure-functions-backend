@@ -1,8 +1,9 @@
 import httpTrigger from '../src/CreateTodoItem';
 import { NewTodoItem } from '../src/Models/new-todo-item';
 import { TestContext } from './Mocks/testContext';
+import * as util from "../src/Common/Utils";
 
-jest.mock("../src/Common/Utils");
+jest.spyOn(util, 'getUserId').mockReturnValue('mock-user-id');
 
 it('should set todo item record output binding when validation pass', async () => {
     const todoItem = {

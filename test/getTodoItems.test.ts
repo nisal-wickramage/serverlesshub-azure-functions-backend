@@ -3,8 +3,9 @@ import { TestContext } from './Mocks/testContext';
 import { TodoItemRecord } from '../src/Models/todo-item-record';
 import { CosmosClient } from "@azure/cosmos"
 import { mocked } from 'ts-jest/utils';
+import * as util from "../src/Common/Utils";
 
-jest.mock("../src/Common/Utils");
+jest.spyOn(util, 'getUserId').mockReturnValue('mock-user-id');
 
 let todoItems = [{
     id: 'mock-id',

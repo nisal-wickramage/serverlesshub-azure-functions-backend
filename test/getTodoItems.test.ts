@@ -1,53 +1,21 @@
 import httpTrigger from '../src/GetTodoItems';
 import { TestContext } from './Mocks/testContext';
-import { TodoItemRecord } from '../src/Models/todo-item-record';
 import { CosmosClient } from "@azure/cosmos"
-import { mocked } from 'ts-jest/utils';
 import * as util from "../src/Common/Utils";
-
-
-let todoItems = [{
-    id: 'mock-id',
-    userId: 'mock-user-id',
-    title: 'mock-title',
-    description: 'mock-description'
-} as TodoItemRecord];
+import { cosmosClient } from './Mocks/cosmosClient';
 
 jest.mock("@azure/cosmos", () => {
     return {
         CosmosClient: jest.fn().mockImplementation((connectionString: string) => {
-            return {
-                database: function(dbname: string) {
-                    return {
-                        container: function(container: string) {
-                            return {
-                                items: {
-                                    query: function(querySpec: { query: string }) {
-                                        let records = [];
-                                        if(querySpec.query.includes('mock-user-id')) {
-                                            records = todoItems;
-                                        }
-
-                                        return {
-                                            fetchAll: function() {
-                                                return { resources: records };
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return cosmosClient
         })
     };
 });
 
-const MockedCosmosClient = mocked(CosmosClient, true);
+const CosmosClientMock = CosmosClient as jest.MockedClass<typeof CosmosClient>;
 
 beforeEach(() => {
-    MockedCosmosClient.mockClear();
+    CosmosClientMock.mockClear();
 })
 
 it('should return 200 when todo items exists', async () => {
@@ -57,7 +25,7 @@ it('should return 200 when todo items exists', async () => {
     
     await httpTrigger(context, request);
     expect(context.res.status).toBe(200);
-    expect(MockedCosmosClient).toHaveBeenCalledTimes(1);
+    expect(CosmosClientMock).toHaveBeenCalledTimes(1);
 })
 
 it('should return 204 when todo items does not exists', async () => {
@@ -67,5 +35,5 @@ it('should return 204 when todo items does not exists', async () => {
 
     await httpTrigger(context, request);
     expect(context.res.status).toBe(204);
-    expect(MockedCosmosClient).toHaveBeenCalledTimes(1);
+    expect(CosmosClientMock).toHaveBeenCalledTimes(1);
 })

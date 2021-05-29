@@ -1,37 +1,22 @@
 import blobTrigger from '../src/ProcessUploads';
 import { TestContext } from './Mocks/testContext';
-import { TodoItemRecord } from '../src/Models/todo-item-record';
 import { CosmosClient } from "@azure/cosmos"
-import { mocked } from 'ts-jest/utils';
 import * as fs from "fs";
 import * as path from "path";
+import { cosmosClient } from './Mocks/cosmosClient';
 
 jest.mock("@azure/cosmos", () => {
     return {
         CosmosClient: jest.fn().mockImplementation((connectionString: string) => {
-            return {
-                database: function(dbname: string) {
-                    return {
-                        container: function(container: string) {
-                            return {
-                                items: {
-                                    create: function(todoItem: TodoItemRecord) {
-                                        return { resources: todoItem };
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return cosmosClient
         })
     };
 });
 
-const MockedCosmosClient = mocked(CosmosClient, true);
+const CosmosClientMock = CosmosClient as jest.MockedClass<typeof CosmosClient>;
 
 beforeEach(() => {
-    MockedCosmosClient.mockClear();
+    CosmosClientMock.mockClear();
 })
 
 it('should insert correct number of items to db', async () => {
@@ -41,5 +26,5 @@ it('should insert correct number of items to db', async () => {
     
     await blobTrigger(context, blob);
     expect(context.res).toBe(undefined);
-    expect(MockedCosmosClient).toHaveBeenCalledTimes(3);
+    expect(CosmosClientMock).toHaveBeenCalledTimes(3);
 });

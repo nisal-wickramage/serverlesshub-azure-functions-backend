@@ -6,5 +6,6 @@
     "rootDir": "src",
     "sourceMap": true,
     "strict": false
-  }
+  },
+  "exclude": ["test/**/*"]
 }

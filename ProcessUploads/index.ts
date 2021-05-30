@@ -4,7 +4,7 @@ import { createTodoItem } from "../DataAccess/todo-item-repository";
 
 const blobTrigger: AzureFunction = async function (context: Context, myBlob: any): Promise<void> {
     context.log.info("Process todo items started.");
-    context.log("Blob trigger function processed blob \n Name:", context.bindingData.name, "\n Blob Size:", myBlob.length, "Bytes");
+    context.log.info("Blob trigger function processed blob \n Name:", context.bindingData.name, "\n Blob Size:", myBlob.length, "Bytes");
 
     const todoItems = getTodoItems(myBlob);
     todoItems.forEach(async item => {

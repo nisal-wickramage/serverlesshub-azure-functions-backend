@@ -2,8 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "outDir": "dist",
-    "rootDir": ".",
+    "outDir": "src/dist",
+    "rootDir": "src",
     "sourceMap": true,
     "strict": false
   }

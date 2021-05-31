@@ -23,6 +23,9 @@ export const mockCosmosClient = {
                                     return { resources: todoItemRecords};
                                 }
                             }
+                        },
+                        create: function (todoItemRecord:TodoItemRecord) {
+                            return { resources: todoItemRecord};
                         }
                     }
                 }

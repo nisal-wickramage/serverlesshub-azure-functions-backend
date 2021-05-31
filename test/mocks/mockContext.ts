@@ -6,7 +6,7 @@ export class MockContext implements Context{
     bindings: ContextBindings = {
         todoItemRecord: null
     } as ContextBindings;
-    bindingData: ContextBindingData;
+    bindingData: ContextBindingData = { name: 'todoitems.csv'} as ContextBindingData;
     traceContext: TraceContext;
     bindingDefinitions: BindingDefinition[];
     log: Logger = {

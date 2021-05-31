@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
-    "test": "jest"
+    "test": "jest --collect-coverage"
   },
   "dependencies": {
     "@azure/cosmos": "^3.11.1",

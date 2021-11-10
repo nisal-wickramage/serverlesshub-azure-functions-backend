@@ -38,5 +38,5 @@ jobs:
         id: fa
         with:
           app-name: nisaltest001
-          package: dist
+          package: ./dist
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}

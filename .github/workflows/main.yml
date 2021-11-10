@@ -32,6 +32,7 @@ jobs:
           node-version: '12'
       - run: npm install
       - run: npm run build
+      - run: npm prune --production
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
